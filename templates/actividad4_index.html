@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Compra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_style.css') }}">
+</head>
+    <body>
+        <div class="container">
+            <h2>Cálculo de Compra 4</h2>
+            <form action="/act4" method="POST" >
+                <label for="unidades">Número de unidades:</label>
+                <input type="number" id="unidades" name="unidades" required min="1">
+
+                <label for="precio">Precio unitario:</label>
+                <input type="number" id="precio" name="precio" required min="0" step="0.01">
+
+                <button type="submit">Calcular</button>
+            </form>
+        </div>
+    </body>
+</html>

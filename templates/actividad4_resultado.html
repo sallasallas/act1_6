@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados</title>
+    <style>
+          body {
+              font-family: Arial, sans-serif;
+              background: #f9f9f9;
+              padding: 20px;
+          }
+          .container {
+              background: #fff;
+              border: 1px solid #ddd;
+              padding: 20px;
+              max-width: 400px;
+              margin: 0 auto;
+              box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+          }
+          input, button {
+              width: 100%;
+              padding: 10px;
+              margin: 10px 0;
+          }
+          .resultado {
+              background: #e8f5e9;
+              border: 1px solid #a5d6a7;
+              padding: 10px;
+              margin-top: 20px;
+          }
+        </style>
+</head>
+  <body>
+      <div id="resultado" class="resultado">
+        <h2>Resultados de la Compra</h2>
+        {% if resultado.error %}
+            <p style="color: red;">{{ resultado.error }}</p>
+        {% else %}
+            <p><strong>Sub-total:</strong> ${{ resultado.sub_total }}</p>
+            <p><strong>Descuento aplicado:</strong> {{ resultado.descuento_aplicado }}</p>
+            <p><strong>Monto de descuento:</strong> ${{ resultado.monto_descuento }}</p>
+            <p><strong>Total a pagar:</strong> ${{ resultado.total_a_pagar }}</p>
+        {% endif %}
+        <a href="/act4">Volver</a>
+      </div>
+  </body>
+</html>

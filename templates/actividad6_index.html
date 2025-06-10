@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Compra</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <link rel="stylesheet" href="{{ url_for('static', filename='my_style.css') }}">
+</head>
+    <body>
+        <div class="container">
+
+            <div>
+                <h2>Lista productos</h2>
+
+                <button type="button" onclick="get_list()">Ver listado</button>
+
+                <div id="list_result"></div>
+            </div>
+
+            <div>
+                <h2>Buscar producto por id</h2>
+
+                <label for="byid_id">Identificador:</label>
+                <input type="number" id="byid_id" name="identidficador" required min="1">
+
+                <button type="button" onclick="get_by()">Buscar</button>
+
+                <div id="get_by_id_result"></div>
+
+            </div>
+
+            <div>
+                <h2>Insertar producto</h2>
+
+                <label for="ins_nombre">Nombre:</label>
+                <input type="text" id="ins_nombre" name="ins_name">
+
+                <label for="ins_precio">Precio unitario:</label>
+                <input type="number" id="ins_precio" name="precio" required min="0" step="0.01">
+
+                <button type="button"  onclick="insert()">Insertar</button>
+
+                <div id="insert_result"></div>
+            </div>
+
+            <div>
+                <h2>Eliminar producto por id</h2>
+
+                <label for="del_id">Identificador:</label>
+                <input type="number" id="del_id" name="identidficador" required min="1">
+
+                <button type="button" onclick="del_by()">Eliminar</button>
+
+                <div id="del_result"></div>
+
+            </div>
+
+        </div>
+
+        <script>
+            function get_list(){
+                $.ajax({
+                    url: '/act6/list',
+                    method: 'GET',
+                    success: function(response) {
+                        $('#list_result').html(response);
+                    },
+                    error: function(e) {
+                        alert('Error loading lista.');
+                    }
+                });
+            }
+
+            function get_by(){
+                let id = $("#byid_id").val();
+                $.ajax({
+                    url: '/producto/'+id,
+                    method: 'GET',
+                    success: function(response) {
+                        let decoded = JSON.stringify(response);
+                        $('#get_by_id_result').html(decoded);
+                    },
+                    error: function() {
+                        alert('Error loading producto.');
+                    }
+                });
+            }
+
+            function insert(){
+                let nombre = $("#ins_nombre").val();
+                let precio = $("#ins_precio").val();
+                let data = JSON.stringify({"nombre":nombre,"precio":precio});
+                $.ajax({
+                    url: '/producto/agregar',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: data,
+                    success: function(response) {
+                        let decoded = JSON.stringify(response);
+                        $('#insert_result').html(decoded);
+                    },
+                    error: function() {
+                        alert('Error loading producto.');
+                    }
+                });
+            }
+
+            function del_by(){
+                let id = $("#del_id").val();
+                $.ajax({
+                    url: '/producto/borrar/'+id,
+                    method: 'GET',
+                    success: function(response) {
+                        let decoded = JSON.stringify(response);
+                        $('#del_result').html(decoded);
+                    },
+                    error: function() {
+                        alert('Error loading producto.');
+                    }
+                });
+            }
+
+        </script>
+
+    </body>
+</html>
